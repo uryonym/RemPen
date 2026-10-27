@@ -1,4 +1,4 @@
-package com.uryonet.rempen.model.entity
+package com.uryonet.rempen.data.entity
 
 data class PhotoList (
     val errCode: String,

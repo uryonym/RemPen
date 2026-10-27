@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.uryonet.rempen.R
 import com.uryonet.rempen.app.App
-import com.uryonet.rempen.model.entity.DirName
-import com.uryonet.rempen.model.entity.FileUrl
-import com.uryonet.rempen.model.entity.PhotoListItem
+import com.uryonet.rempen.data.model.DirName
+import com.uryonet.rempen.data.model.FileUrl
+import com.uryonet.rempen.data.model.PhotoListItem
 
 
 class PhotoListAdapter(val photoUrlList: MutableList<PhotoListItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

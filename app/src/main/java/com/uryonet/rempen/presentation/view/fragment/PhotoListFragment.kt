@@ -1,5 +1,6 @@
 package com.uryonet.rempen.presentation.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -9,16 +10,18 @@ import android.view.ViewGroup
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.moshi.responseObject
 import com.uryonet.rempen.R
-import com.uryonet.rempen.model.entity.DirName
-import com.uryonet.rempen.model.entity.FileUrl
-import com.uryonet.rempen.model.entity.PhotoList
-import com.uryonet.rempen.model.entity.PhotoListItem
+import com.uryonet.rempen.data.entity.PhotoList
+import com.uryonet.rempen.data.model.DirName
+import com.uryonet.rempen.data.model.FileUrl
+import com.uryonet.rempen.data.model.PhotoListItem
+import com.uryonet.rempen.presentation.presenter.PhotoListPresenter
 import com.uryonet.rempen.presentation.view.adapter.PhotoListAdapter
 import kotlinx.android.synthetic.main.fragment_photo_list.*
 
 class PhotoListFragment : Fragment() {
 
     var photoUrlList: MutableList<PhotoListItem> = mutableListOf()
+    var photoListPresenter: PhotoListPresenter? = null
 
     companion object {
         private const val TAG = "PhotoListFragment"
@@ -26,6 +29,10 @@ class PhotoListFragment : Fragment() {
         fun newInstance(): PhotoListFragment {
             return PhotoListFragment()
         }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +45,24 @@ class PhotoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        photoListPresenter = PhotoListPresenter(this)
+
         initRecyclerView()
         getPhotoList()
     }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    /**
+     * Methods
+     */
 
     private fun initRecyclerView() {
         val glm = GridLayoutManager(context, 3)
@@ -64,7 +86,8 @@ class PhotoListFragment : Fragment() {
                 val dirName: DirName = DirName(dirString)
                 photoUrlList.add(dirName)
                 it.files.forEach {
-                    val fileUrl: FileUrl = FileUrl(dirString, it)
+                    val fileUrl: FileUrl =
+                        FileUrl(dirString, it)
                     photoUrlList.add(fileUrl)
                 }
             }
